@@ -1,17 +1,25 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const props = defineProps(['msg']);
 const helloMessage = ref('');
 
-onMounted(() => {
-  fetch("api/messages/hello").then(res => res.text()).then((data) => {helloMessage.value = data});
+// testing connection
+async function hello() {
+  try {
+    const res = await fetch("api/messages/hello", {method: "GET"});
+    helloMessage.value = await res.text();
+  } catch (err) {
+    console.error("An error occurred: " + err.messages);
+  }
+}
+
+onMounted(async () => {
+  await hello();
 });
 
 </script>
 
 <template>
-  <h1>{{ props.msg }}</h1>
   <p>{{helloMessage}}</p>
 </template>
 
