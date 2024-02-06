@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 06 Lut 2024, 18:42
--- Wersja serwera: 10.1.38-MariaDB
--- Wersja PHP: 7.3.4
+-- Generation Time: Feb 06, 2024 at 09:48 PM
+-- Wersja serwera: 10.4.32-MariaDB
+-- Wersja PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Baza danych: `students_management`
+-- Database: `students_management`
 --
 
 -- --------------------------------------------------------
@@ -29,10 +28,23 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `grades` (
-  `id` int(11) NOT NULL,
-  `student_name` varchar(120) COLLATE utf8_polish_ci NOT NULL,
-  `student_surname` varchar(120) COLLATE utf8_polish_ci NOT NULL,
-  `subject_name` varchar(120) COLLATE utf8_polish_ci NOT NULL
+  `student_id` bigint(20) DEFAULT NULL,
+  `subject_id` bigint(20) DEFAULT NULL,
+  `grade` varchar(255) DEFAULT NULL,
+  `grade_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `students`
+--
+
+CREATE TABLE `students` (
+  `student_id` bigint(20) NOT NULL,
+  `student_name` varchar(120) NOT NULL,
+  `student_surname` varchar(120) NOT NULL,
+  `subject_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
@@ -42,10 +54,8 @@ CREATE TABLE `grades` (
 --
 
 CREATE TABLE `subjects` (
-  `id` int(11) NOT NULL,
-  `student_name` varchar(120) COLLATE utf8_polish_ci NOT NULL,
-  `student_surname` varchar(120) COLLATE utf8_polish_ci NOT NULL,
-  `subject_name` varchar(120) COLLATE utf8_polish_ci NOT NULL
+  `subject_id` bigint(20) NOT NULL,
+  `subject_name` varchar(120) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
@@ -53,16 +63,20 @@ CREATE TABLE `subjects` (
 --
 
 --
--- Indeksy dla tabeli `grades`
---
-ALTER TABLE `grades`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indeksy dla tabeli `subjects`
 --
 ALTER TABLE `subjects`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`subject_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `subject_id` bigint(20) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
