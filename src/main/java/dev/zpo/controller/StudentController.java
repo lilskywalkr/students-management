@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/students")
+@CrossOrigin(origins = "http://localhost:3000")
 public class StudentController {
 
     @Autowired
@@ -19,7 +20,8 @@ public class StudentController {
         return "Student Management Application";
     }
 
-    @PostMapping
+
+    @PostMapping("/add")
     public ResponseEntity<Student> addStudent(@RequestBody Student student) {
         Student addedStudent = studentService.addStudent(student);
         return new ResponseEntity<>(addedStudent, HttpStatus.CREATED);

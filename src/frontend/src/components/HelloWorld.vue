@@ -6,7 +6,7 @@ const helloMessage = ref('');
 // Function to add a student
 async function addStudent(studentData) {
   try {
-    const res = await fetch("api/students/addStudent", {
+    const res = await fetch("http://localhost:8080/api/students/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +37,7 @@ async function hello() {
 
 onMounted(async () => {
   //await hello();
-  await addStudent ({student_id: 123456, student_name: 'John', student_surname: 'Doe', subject_id: 0});
+  await addStudent ({studentName: 'John', studentSurname: 'Doe', subjectId: 0, studentId: 123456});
 });
 
 </script>
