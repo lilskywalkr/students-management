@@ -82,6 +82,7 @@ async function deleteSubject(subjectId) {
   }
 }
 
+// Function for getting all subjects
 async function getAllSubjects() {
   try {
     const res = await fetch("http://localhost:8080/api/subjects/get", {
@@ -100,6 +101,7 @@ async function getAllSubjects() {
   }
 }
 
+// Function for getting a specific object
 async function getSubjectById(subjectId) {
   try {
     const res = await fetch(`http://localhost:8080/api/subjects/${subjectId}`, {
@@ -115,6 +117,60 @@ async function getSubjectById(subjectId) {
     }
   } catch (err) {
     console.error("An error occurred: " + err.messages);
+  }
+}
+
+// Function for adding a grade
+async function addGrade(gradeData) {
+  try {
+    const res = await fetch("http://localhost:8080/api/grades/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(gradeData),
+    });
+
+    if (res.ok) {
+      helloMessage.value = "Grade added successfully!";
+    } else {
+      helloMessage.value = "Failed to add grade";
+      console.log(res);
+    }
+  } catch (err) {
+    console.error("An error occurred: " + err.messages);
+  }
+}
+
+async function deleteGradeBySubjectId(subjectId) {
+  try {
+    const res = await fetch(`http://localhost:8080/api/grades/${subjectId}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      helloMessage.value = "Grade deleted successfully!";
+    } else {
+      helloMessage.value = "Failed to delete grade";
+    }
+  } catch (err) {
+    console.error("An error occurred: " + err.message);
+  }
+}
+
+async function deleteGradeByStudentId(studentId) {
+  try {
+    const res = await fetch(`http://localhost:8080/api/grades/std/${studentId}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      helloMessage.value = "Grades deleted successfully!";
+    } else {
+      helloMessage.value = "Failed to delete grades";
+    }
+  } catch (err) {
+    console.error("An error occurred: " + err.message);
   }
 }
 
@@ -146,6 +202,11 @@ onMounted(async () => {
   <button @click="deleteSubject(0)">Delete English</button><br>
   <button @click="getAllSubjects()">Get all subject</button><br>
   <button @click="getSubjectById(1)">Get the German</button><br>
+  <button @click="addGrade({studentId: 123456, subjectId: 0, grade: 4})">Add grade 4 in English for John</button><br>
+  <button @click="addGrade({studentId: 123456, subjectId: 0, grade: 5})">Add grade 5 in English for John</button><br>
+  <button @click="addGrade({studentId: 123456, subjectId: 1, grade: 5})">Add grade 5 in German for John</button><br>
+  <button @click="deleteGradeBySubjectId(0)">Delete English grades for students</button><br>
+  <button @click="deleteGradeByStudentId(123456)">Delete all grades for John</button><br>
 </template>
 
 <style scoped>
