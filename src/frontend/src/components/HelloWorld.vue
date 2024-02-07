@@ -25,6 +25,100 @@ async function addStudent(studentData) {
   }
 }
 
+// Function for deleting a student
+async function deleteStudent(studentId) {
+  try {
+    const res = await fetch(`http://localhost:8080/api/students/${studentId}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      helloMessage.value = "Student deleted successfully!";
+    } else {
+      helloMessage.value = "Failed to delete student";
+    }
+  } catch (err) {
+    console.error("An error occurred: " + err.message);
+  }
+}
+
+// Function for adding a subject
+async function addSubject(subjectData) {
+  try {
+    const res = await fetch("http://localhost:8080/api/subjects/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(subjectData),
+    });
+
+    if (res.ok) {
+      helloMessage.value = "Subject added successfully!";
+    } else {
+      helloMessage.value = "Failed to add Subject";
+      console.log(res);
+    }
+  } catch (err) {
+    console.error("An error occurred: " + err.messages);
+  }
+}
+
+
+// Function for deleting a subject
+async function deleteSubject(subjectId) {
+  try {
+    const res = await fetch(`http://localhost:8080/api/subjects/${subjectId}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      helloMessage.value = "Subject deleted successfully!";
+    } else {
+      helloMessage.value = "Failed to delete subject";
+    }
+  } catch (err) {
+    console.error("An error occurred: " + err.message);
+  }
+}
+
+async function getAllSubjects() {
+  try {
+    const res = await fetch("http://localhost:8080/api/subjects/get", {
+      method: "GET",
+    });
+
+    if (res.ok) {
+      console.log(await res.json());
+      helloMessage.value = "Subjects fetched successfully!";
+    } else {
+      helloMessage.value = "Failed to fetch Subjects";
+      console.log(res);
+    }
+  } catch (err) {
+    console.error("An error occurred: " + err.messages);
+  }
+}
+
+async function getSubjectById(subjectId) {
+  try {
+    const res = await fetch(`http://localhost:8080/api/subjects/${subjectId}`, {
+      method: "GET",
+    });
+
+    if (res.ok) {
+      console.log(await res.json());
+      helloMessage.value = "Subject fetched successfully!";
+    } else {
+      helloMessage.value = "Failed to fetch Subject";
+      console.log(res);
+    }
+  } catch (err) {
+    console.error("An error occurred: " + err.messages);
+  }
+}
+
+
 // testing connection
 async function hello() {
   try {
@@ -37,13 +131,21 @@ async function hello() {
 
 onMounted(async () => {
   //await hello();
-  await addStudent ({studentName: 'John', studentSurname: 'Doe', subjectId: 0, studentId: 123456});
+  //await addStudent ({studentName: 'John', studentSurname: 'Doe', subjectId: 0, studentId: 123456});
 });
 
 </script>
 
 <template>
   <p>{{helloMessage}}</p>
+
+  <button @click="addStudent ({studentName: 'John', studentSurname: 'Doe', subjectId: 0, studentId: 123456})">Add John Doe</button><br>
+  <button @click="deleteStudent(123456)">Delete John Doe</button><br>
+  <button @click="addSubject({subjectId: 0, subjectName: 'English'})">Add English</button><br>
+  <button @click="addSubject({subjectId: 1, subjectName: 'German'})">Add German</button><br>
+  <button @click="deleteSubject(0)">Delete English</button><br>
+  <button @click="getAllSubjects()">Get all subject</button><br>
+  <button @click="getSubjectById(1)">Get the German</button><br>
 </template>
 
 <style scoped>

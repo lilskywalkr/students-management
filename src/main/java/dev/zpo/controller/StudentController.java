@@ -20,7 +20,6 @@ public class StudentController {
         return "Student Management Application";
     }
 
-
     @PostMapping("/add")
     public ResponseEntity<Student> addStudent(@RequestBody Student student) {
         Student addedStudent = studentService.addStudent(student);
@@ -29,7 +28,7 @@ public class StudentController {
 
     @DeleteMapping("/{studentId}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long studentId) {
-        studentService.deleteStudentById(studentId);
+        studentService.deleteStudentByStudentId(studentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
