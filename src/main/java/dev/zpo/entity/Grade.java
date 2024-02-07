@@ -1,6 +1,7 @@
 package dev.zpo.entity;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Table(name = "grades")
@@ -17,7 +18,7 @@ public class Grade {
     private Long subjectId;
 
     @Column(name = "grade")
-    private String grade;
+    private Double grade;
 
     public Grade() {}
 
@@ -34,7 +35,7 @@ public class Grade {
         return subjectId;
     }
 
-    public String getGrade() {
+    public Double getGrade() {
         return grade;
     }
 
@@ -51,7 +52,7 @@ public class Grade {
         this.subjectId = subjectId;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Double grade) {
         this.grade = grade;
     }
 }

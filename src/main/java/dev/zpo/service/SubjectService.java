@@ -31,4 +31,12 @@ public class SubjectService {
     public void deleteSubjectBySubjectId(Long subjectId) {
         subjectRepository.deleteBySubjectId(subjectId);
     }
+
+    public List<Object[]> getSubjectsAndGradesForStudent(Long studentId) {
+        return subjectRepository.findSubjectsAndGradesForStudent(studentId);
+    }
+
+    public List<Object[]> getSubjectsAndAverageGrades() {
+        return subjectRepository.findSubjectsAndAverageGrades();
+    }
 }

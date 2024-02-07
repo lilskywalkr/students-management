@@ -16,9 +16,6 @@ public class Student {
     @Column(name = "student_surname")
     private String studentSurname;
 
-    @Column(name = "subject_id")
-    private Long subjectId;
-
     @Column(name = "student_id")
     private Long studentId;
 
@@ -56,13 +53,5 @@ public class Student {
 
     public void setStudentSurname(String studentSurname) {
         this.studentSurname = studentSurname;
-    }
-
-    public Long getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(Long subjectId) {
-        this.subjectId = subjectId;
     }
 }

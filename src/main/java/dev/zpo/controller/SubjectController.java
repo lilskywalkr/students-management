@@ -45,4 +45,16 @@ public class SubjectController {
         subjectService.deleteSubjectBySubjectId(subjectId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/sbj/{studentId}")
+    public ResponseEntity<List<Object[]>> getSubjectsAndGradesForStudent(@PathVariable Long studentId) {
+        List<Object[]> subjectsAndGrades = subjectService.getSubjectsAndGradesForStudent(studentId);
+        return new ResponseEntity<>(subjectsAndGrades, HttpStatus.OK);
+    }
+
+    @GetMapping("/average-grades")
+    public ResponseEntity<List<Object[]>> getSubjectsAndAverageGrades() {
+        List<Object[]> subjectsAndAverageGrades = subjectService.getSubjectsAndAverageGrades();
+        return new ResponseEntity<>(subjectsAndAverageGrades, HttpStatus.OK);
+    }
 }

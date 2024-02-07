@@ -195,8 +195,8 @@ onMounted(async () => {
 <template>
   <p>{{helloMessage}}</p>
 
-  <button @click="addStudent ({studentName: 'John', studentSurname: 'Doe', subjectId: 0, studentId: 123456})">Add John Doe</button><br>
-  <button @click="deleteStudent(123456)">Delete John Doe</button><br>
+  <button @click="addStudent ({studentName: 'John', studentSurname: 'Doe', studentId: 123456})">Add John Doe</button><br>
+  <button @click="deleteStudent(111222)">Delete Steve Smith</button><br>
   <button @click="addSubject({subjectId: 0, subjectName: 'English'})">Add English</button><br>
   <button @click="addSubject({subjectId: 1, subjectName: 'German'})">Add German</button><br>
   <button @click="deleteSubject(0)">Delete English</button><br>
