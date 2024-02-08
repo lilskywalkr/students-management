@@ -2,17 +2,13 @@
 
 An application for managing students in universities
 
-# Configuration
-
-import the sql db in xampp mysql
-
-# installation
+# Installation
 
 ./
 
 mvn clean install
 
-and then run StudentsManagementApplication
+and then run StudentsManagementApplication.java
 
 ./src/frontend
 
