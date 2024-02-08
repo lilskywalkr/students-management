@@ -22,4 +22,8 @@ public class GradeService {
     public void deleteGradesByStudentId(Long studentId) {
         gradeRepository.deleteByStudentId(studentId);
     }
+
+    public int updateGradeById(Long gradeId, String grade) {
+        return gradeRepository.updateGradeById(gradeId, grade);
+    }
 }

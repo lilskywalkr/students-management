@@ -10,8 +10,6 @@ export function useSubject() {
                 body: JSON.stringify(subjectData),
             });
 
-            console.log(res);
-
             if (res.ok) {
                 return {message: "Subject added successfully!", flag: true};
             } else {
@@ -30,8 +28,6 @@ export function useSubject() {
                 method: "DELETE",
             });
 
-            console.log(res);
-
             if (res.ok) {
                 return {message: "Subject deleted successfully!", flag: true};
             } else {
@@ -48,8 +44,6 @@ export function useSubject() {
             const res = await fetch("http://localhost:8080/api/subjects/get", {
                 method: "GET",
             });
-
-            console.log(res);
 
             if (res.ok) {
                 return {message: await res.json(), flag: true};
@@ -68,8 +62,6 @@ export function useSubject() {
                 method: "GET",
             });
 
-            console.log(res);
-
             if (res.ok) {
                 return {message: await res.json(), flag: true};
             } else {
@@ -86,8 +78,6 @@ export function useSubject() {
             const res = await fetch(`http://localhost:8080/api/subjects/sbj/${studentId}`, {
                 method: 'GET'
             });
-
-            console.log(res);
 
             if (res.ok) {
                 return {message: await res.json(), flag: true};
@@ -106,8 +96,6 @@ export function useSubject() {
             const res = await fetch('http://localhost:8080/api/subjects/average-grades', {
                 method: 'GET'
             });
-
-            console.log(res);
 
             if (res.ok) {
                 return {message: await res.json(), flag: true};

@@ -11,8 +11,6 @@ export function useStudent() {
                 body: JSON.stringify(studentData),
             });
 
-            console.log(res);
-
             if (res.ok) {
                 return {message: "Student added successfully!", flag: true};
             } else {
@@ -29,8 +27,6 @@ export function useStudent() {
             const res = await fetch(`http://localhost:8080/api/students/${studentId}`, {
                 method: "DELETE",
             });
-
-            console.log(res);
 
             if (res.ok) {
                return {message: "Student deleted successfully", flag: true};

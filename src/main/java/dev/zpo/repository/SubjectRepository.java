@@ -14,7 +14,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
     Subject findBySubjectId(Long subjectId);
     void deleteBySubjectId(Long subjectId);
 
-    @Query("SELECT s.studentId, s.studentName, s.studentSurname, g.subjectId, sub.subjectName, g.grade FROM Student s JOIN Grade g ON s.studentId = g.studentId JOIN Subject sub ON g.subjectId = sub.subjectId WHERE s.studentId = :studentId")
+    @Query("SELECT s.studentId, s.studentName, s.studentSurname, g.subjectId, sub.subjectName, g.grade, g.id FROM Student s JOIN Grade g ON s.studentId = g.studentId JOIN Subject sub ON g.subjectId = sub.subjectId WHERE s.studentId = :studentId")
     List<Object[]> findSubjectsAndGradesForStudent(@Param("studentId") Long studentId);
 
     @Query("SELECT s.subjectId, s.subjectName, AVG(g.grade) FROM Subject s JOIN Grade g ON s.subjectId = g.subjectId GROUP BY s.subjectName")

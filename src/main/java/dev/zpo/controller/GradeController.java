@@ -32,4 +32,14 @@ public class GradeController {
         gradeService.deleteGradesByStudentId(studentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping("/grade-update/{gradeId}")
+    public ResponseEntity<Void> updateGradeById(@PathVariable Long gradeId, @RequestBody String grade) {
+        int rowsAffected = gradeService.updateGradeById(gradeId, grade);
+        if (rowsAffected > 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

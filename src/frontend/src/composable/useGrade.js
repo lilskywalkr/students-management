@@ -10,8 +10,6 @@ export function useGrade() {
                 body: JSON.stringify(gradeData),
             });
 
-            console.log(res);
-
             if (res.ok) {
                 return {message: "Grade added successfully!", flag: true};
             } else {
@@ -28,8 +26,6 @@ export function useGrade() {
             const res = await fetch(`http://localhost:8080/api/grades/${subjectId}`, {
                 method: "DELETE",
             });
-
-            console.log(res);
 
             if (res.ok) {
                 return {message: "Grade deleted successfully!", flag: true};
@@ -48,8 +44,6 @@ export function useGrade() {
                 method: "DELETE",
             });
 
-            console.log(res);
-
             if (res.ok) {
                 return {message: "Grades deleted successfully!", flag: true};
             } else {
@@ -60,9 +54,31 @@ export function useGrade() {
         }
     }
 
+    // Function for updating a grade by its ID
+    async function updateGradeByGradeId(id, grade) {
+        try {
+            const res = await fetch(`http://localhost:8080/api/grades/grade-update/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(grade),
+            });
+
+            if (res.status === 204) {
+                return { message: "Grade updated successfully!", flag: true };
+            } else {
+                return { message: "Failed to update grade", flag: false }
+            }
+        } catch (err) {
+            console.error("An error occurred: " + err.message);
+        }
+    }
+
     return {
         addGrade,
         deleteGradeBySubjectId,
         deleteGradeByStudentId,
+        updateGradeByGradeId
     }
 }
