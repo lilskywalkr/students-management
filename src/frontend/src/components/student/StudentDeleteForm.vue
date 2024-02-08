@@ -1,9 +1,11 @@
 <script setup>
   import {ref} from "vue";
   import {useStudent} from "../../composable/useStudent.js";
+  import {useGrade} from "../../composable/useGrade.js";
 
   // getting crud functions
   const {deleteStudent} = useStudent();
+  const {deleteGradeByStudentId} = useGrade()
 
   const emit = defineEmits(['handle-result'])
 
@@ -11,6 +13,7 @@
 
   // composable function handling
   async function handleComposable() {
+    await deleteGradeByStudentId(oldStudent.value.studentId);
     const result = await deleteStudent(oldStudent.value.studentId);
 
     emit('handle-result', result);

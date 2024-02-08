@@ -5,12 +5,14 @@ import SubjectAddForm from "./subject/SubjectAddForm.vue";
 import GradeAddForm from "./grade/GradeAddForm.vue";
 import StudentDeleteForm from "./student/StudentDeleteForm.vue";
 import SubjectDeleteForm from "./subject/SubjectDeleteForm.vue";
-
 import {useSubject} from "../composable/useSubject.js";
 
-const studentsWithGrades = ref([]);
+const {getSubjectsAndGradesForStudent, getSubjectsAndAverageGrades} = useSubject()
 
-const {getSubjectsAndGradesForStudent} = useSubject()
+const studentsWithGrades = ref([]);
+const subjectsWithAverageGrades = ref([])
+
+const studentId = ref('');
 
 // refs for operation results communication
 const message = ref("");
@@ -20,8 +22,29 @@ const handleResult = (result) => {
   message.value = result?.message;
 };
 
+async function _getSubjectsAndGradesForStudent(id) {
+  let res = null;
+  if (id.length) {
+    res = await getSubjectsAndGradesForStudent(id);
+  }
+
+  if (res?.flag) {
+    studentsWithGrades.value = res?.message;
+  }
+
+}
+
+async function _getSubjectsAndAverageGrades() {
+  const res = await getSubjectsAndAverageGrades();
+
+  if (res.flag) {
+    subjectsWithAverageGrades.value = res.message;
+  }
+}
+
 onMounted(async () => {
-  console.log(await getSubjectsAndGradesForStudent(123456));
+  //console.log(await getSubjectsAndGradesForStudent(123456));
+  //console.log(await getSubjectsAndAverageGrades());
 })
 
 </script>
@@ -30,17 +53,22 @@ onMounted(async () => {
   <h1 class="result">{{ message }}</h1>
   <div class="form-wrapper">
     <StudentAddForm @handle-result="handleResult" />
-    <StudentDeleteForm @handle-result="handleResult" />
-
-    <SubjectAddForm @handle-result="handleResult" />
-    <SubjectDeleteForm @handle-result="handleResult" />
-
     <GradeAddForm @handle-result="handleResult"/>
+    <SubjectAddForm @handle-result="handleResult" />
+
+    <StudentDeleteForm @handle-result="handleResult" />
+    <SubjectDeleteForm @handle-result="handleResult" />
   </div>
 
-  <!-- Lista studentów z ocenami -->
   <div class="list-container">
-    <h2 class="list-header">Lista Studentów z Ocena</h2>
+    <h2 class="list-header">Lista przedmiotów z ocenami dla studenta</h2>
+
+    <form>
+      <label for="studentId">Id Studenta:</label>
+      <input v-model="studentId" type="text" id="studentId" class="form-input">
+      <button @click.prevent="async () => {await _getSubjectsAndGradesForStudent(studentId)}" class="form-button">Wybierz Studenta</button>
+    </form>
+
     <table class="table">
       <thead>
       <tr>
@@ -54,21 +82,48 @@ onMounted(async () => {
       </tr>
       </thead>
       <tbody>
-      <tr v-for="record in studentsWithGrades" :key="record.student_id">
-        <td>{{ record.studentId }}</td>
-        <td>{{ record.student_name }}</td>
-        <td>{{ record.student_surname }}</td>
-        <td>{{ record.subjectId }}</td>
-        <td>{{ record.subjectName }}</td>
-        <td>{{ record.grade }}</td>
+
+      <tr v-for="(record, index) in studentsWithGrades" :key="index">
+        <td>{{ record[0] }}</td>
+        <td>{{ record[1] }}</td>
+        <td>{{ record[2] }}</td>
+        <td>{{ record[3] }}</td>
+        <td>{{ record[4] }}</td>
+        <td>{{ record[5] }}</td>
         <td>
-          <button @click="removeStudent(record.student_id)" class="action-button">Usuń</button>
-          <button @click="editRecord(record)" class="action-button">Edytuj</button>
+          <button @click="" class="action-button">Edytuj</button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
+
+  <div class="list-container">
+    <h2 class="list-header">Lista przedmiotów ze średnią ocen</h2>
+
+    <form>
+      <button @click.prevent="async () => {await _getSubjectsAndAverageGrades()}" class="form-button">Wyświetl Przedmioty</button>
+    </form>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID Przedmiotu</th>
+        <th>Nazwa Przedmiotu</th>
+        <th>Średnia ocen</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr v-for="(record, index) in subjectsWithAverageGrades" :key="index">
+        <td>{{ record[0] }}</td>
+        <td>{{ record[1] }}</td>
+        <td>{{ record[2] }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
 </template>
 
 <style scoped>
@@ -81,9 +136,11 @@ onMounted(async () => {
 }
 
 .form-wrapper {
-  width: 100vw;
+  width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1vw;
   flex-flow: row wrap;
 }
 </style>
